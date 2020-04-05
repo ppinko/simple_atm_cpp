@@ -7,13 +7,29 @@ int balance = 0;
 // all function prototypes
 void showBalance();
 bool isGoodPin(int pin, int account_no, std::map<int, int> *db);
+int getUserOption();
 
 void showBalance() {
     std::cout << "You have: $" << balance << std::endl;
 }
 
+
 bool isGoodPin(int pin, int account_no, std::map<int, int> *db){
     return (pin == db->at(account_no));
+}
+
+int getUserOption(){
+	int selectedOption {};
+
+	std::cout << "Main menu:" << std::endl;
+	std::cout << " 1 - Show my balance" << std::endl;
+	std::cout << " 2 - Withdraw cash" << std::endl;
+	std::cout << " 3 - Deposit funds" << std::endl;
+	std::cout << " 4 - Exit" << std::endl;
+	std::cout << "Please enter a choice: " << std::endl;
+	std::cin >> selectedOption;
+	
+	return selectedOption;	
 }
 
 int main(){
