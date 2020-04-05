@@ -6,9 +6,14 @@ int balance = 0;
 
 // all function prototypes
 void showBalance();
+bool isGoodPin(int pin, int account_no, std::map<int, int> *db);
 
 void showBalance() {
     std::cout << "You have: $" << balance << std::endl;
+}
+
+bool isGoodPin(int pin, int account_no, std::map<int, int> *db){
+    return (pin == db->at(account_no));
 }
 
 int main(){
