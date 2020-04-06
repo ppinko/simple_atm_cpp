@@ -6,7 +6,7 @@
 #include <sstream>
 
 // global parameters
-int balance = 0;
+int balance = 500;
 
 // all function prototypes
 void showBalance();
@@ -16,6 +16,7 @@ int getUserOption();
 bool login (std::map<int, int> *db);
 void withdrawCash();
 bool isNumber(std::string selection);
+void depositMoney();
 
 void showBalance() {
     std::cout << "You have: $" << balance << std::endl;
@@ -115,9 +116,8 @@ void withdrawCash() {
 		std::cout << "2 - $50" << std::endl;
 		std::cout << "3 - $100" << std::endl;
 		std::cout << "4 - $200" << std::endl;
-		std::cout << "5 - other" << std::endl;
-		std::cout << "6 - cancel transaction" << std::endl;
-		std::cout << "choose a withdrawal option (1-6)" << std::endl;
+		std::cout << "5 - cancel transaction" << std::endl;
+		std::cout << "choose a withdrawal option (1-5)" << std::endl;
         std::string checkInput;
         std::cin >> checkInput;
         if (!isNumber(checkInput)){
@@ -130,8 +130,7 @@ void withdrawCash() {
 			case 2: valueToWithdraw = 50; break;
 			case 3: valueToWithdraw = 100; break;
 			case 4: valueToWithdraw = 200; break;
-			case 5: valueToWithdraw = 200; break;
-			case 6: isNotFinished = false; break;
+			case 5: isNotFinished = false; break;
 			default:
                 std::cout << "Invalid option! Try again." << std::endl;
 				break;
@@ -146,6 +145,55 @@ void withdrawCash() {
 				isNotFinished = false;
 			}
 			valueToWithdraw = 0;
+		}
+	} while (isNotFinished);
+}
+
+void depositMoney() {
+
+	int selectedOption = -1;
+	bool isNotFinished = true;
+
+	do {
+
+		std::cout << "Deposit options:" << std::endl;
+		std::cout << "1 - $20" << std::endl;
+		std::cout << "2 - $50" << std::endl;
+		std::cout << "3 - $100" << std::endl;
+		std::cout << "4 - $200" << std::endl;
+		std::cout << "5 - cancel transaction" << std::endl;
+		std::cout << "choose a deposit option (1-6)" << std::endl;
+
+        std::string checkInput;
+        std::cin >> checkInput;
+        if (!isNumber(checkInput)){
+            std::cout << "Invalid option! Try again." << std::endl;
+            continue;
+        }
+		int selectedOption = std::stoi(checkInput);
+        switch (selectedOption) {
+			case 1:
+				balance = balance + 20;
+				isNotFinished = false;
+				break;
+			case 2:
+				balance = balance + 50;
+				isNotFinished = false;
+				break;
+			case 3:
+				balance = balance + 100;
+				isNotFinished = false;
+				break;
+			case 4:
+				balance = balance + 200;
+				isNotFinished = false;
+				break;
+			case 5:
+				isNotFinished = false;
+				break;
+			default:
+				std::cout << "Invalid option! Try again." << std::endl;
+				break;
 		}
 	} while (isNotFinished);
 }
@@ -172,8 +220,11 @@ int main(){
 //    std::cout << isNumber("hejka") << " should return false" << std::endl;
 //    std::cout << isNumber("123") << " should return true" << std::endl;
 
-    // Test withdrawCash()
-    withdrawCash();
+//    // Test withdrawCash()
+//    withdrawCash();
+
+    // Test
+    depositMoney();
 
     delete db_account_pin;
     return 0;
