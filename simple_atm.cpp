@@ -55,7 +55,7 @@ bool login (std::map<int, int> *db) {
                 throw 0;
         }
         catch (const int &ex){
-            std::cerr << "Inavlid input\n";
+            std::cerr << "Inavlid input. Account number consists 5 digits.\n";
             continue;
         }
         iss >> temp;
@@ -64,9 +64,32 @@ bool login (std::map<int, int> *db) {
             break;
         }
         else {
-            std::cout << "Invalid account number! Try again." << std::endl;
+            std::cout << "Inavlid input. Account number consists 5 digits.\n" << std::endl;
         }
     }
+    int initial_PIN {};
+    while (true){
+        std::cout << "Please enter your PIN: ";
+        std::string givenPIN {};
+		std::cin >> givenPIN;
+        std::istringstream iss {givenPIN};
+        int temp;
+        try {
+            if (!(iss >> temp))
+                throw 0;
+        }
+        catch (const int &ex){
+            std::cerr << "Inavlid input. PIN consists 5 digits.\n";
+            continue;
+        }
+        iss >> temp;
+        if (isGoodPin(temp, account_number, db)){
+            initial_PIN = temp;
+            break;
+        }
+        else std::cout << "Wrong PIN! Try again." << std::endl;
+    }
+    std::cout << "User with account number " << account_number << " is logged." << std::endl;
 	return true;
 }
 
