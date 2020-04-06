@@ -6,7 +6,7 @@
 #include <sstream>
 
 // global parameters
-int balance = 500;
+int balance = 500;  // starting balance for every account
 
 // all function prototypes
 void showBalance();
@@ -31,17 +31,25 @@ bool isValidAccount(int account_no, std::map<int, int> *db){
 }
 
 int getUserOption(){
-	int choosenOption {};
+    int choosenOption {};
+    while (true){
+        std::cout << "Main menu:" << std::endl;
+        std::cout << " 1 - Show my balance" << std::endl;
+        std::cout << " 2 - Withdraw cash" << std::endl;
+        std::cout << " 3 - Deposit funds" << std::endl;
+        std::cout << " 4 - Exit" << std::endl;
+        std::cout << "Please enter a choice: " << std::endl;
 
-	std::cout << "Main menu:" << std::endl;
-	std::cout << " 1 - Show my balance" << std::endl;
-	std::cout << " 2 - Withdraw cash" << std::endl;
-	std::cout << " 3 - Deposit funds" << std::endl;
-	std::cout << " 4 - Exit" << std::endl;
-	std::cout << "Please enter a choice: " << std::endl;
-	std::cin >> choosenOption;
-
-	return choosenOption;
+        std::string checkInput;
+        std::cin >> checkInput;
+        if (!isNumber(checkInput)){
+            std::cout << "Invalid option! Try again." << std::endl;
+            continue;
+        }
+        int choosenOption = std::stoi(checkInput);
+        if (choosenOption >= 1 && choosenOption <= 4)
+            return choosenOption;
+    }
 }
 
 bool login (std::map<int, int> *db) {
@@ -118,6 +126,7 @@ void withdrawCash() {
 		std::cout << "4 - $200" << std::endl;
 		std::cout << "5 - cancel transaction" << std::endl;
 		std::cout << "choose a withdrawal option (1-5)" << std::endl;
+
         std::string checkInput;
         std::cin >> checkInput;
         if (!isNumber(checkInput)){
@@ -125,6 +134,7 @@ void withdrawCash() {
             continue;
         }
 		int selectedOption = std::stoi(checkInput);
+
 		switch (selectedOption) {
 			case 1: valueToWithdraw = 20; break;
 			case 2: valueToWithdraw = 50; break;
@@ -202,7 +212,6 @@ int main(){
     std::cout << std::boolalpha;
 
     // creating a database including initial account numbers and PIN
-
     std::map<int, int> *db_account_pin = new std::map<int, int>;
     for (int i {10000}; i <= 99999; i++){
         db_account_pin->emplace(i, i);
@@ -212,6 +221,9 @@ int main(){
 
 //    std::cout << isValidAccount(12345, db_account_pin) << " should be true" << std::endl;
 //    std::cout << isValidAccount(1234, db_account_pin) << " should be false" << std::endl;
+
+      // Test getUserOption()
+      getUserOption();
 
 //    // Test login()
 //    login(db_account_pin);
@@ -223,8 +235,8 @@ int main(){
 //    // Test withdrawCash()
 //    withdrawCash();
 
-    // Test
-    depositMoney();
+//    // Test
+//    depositMoney();
 
     delete db_account_pin;
     return 0;
