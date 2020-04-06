@@ -217,26 +217,17 @@ int main(){
         db_account_pin->emplace(i, i);
     }
 
-//    // Test isValidAccount()
-
-//    std::cout << isValidAccount(12345, db_account_pin) << " should be true" << std::endl;
-//    std::cout << isValidAccount(1234, db_account_pin) << " should be false" << std::endl;
-
-      // Test getUserOption()
-      getUserOption();
-
-//    // Test login()
-//    login(db_account_pin);
-
-//    // Test isNumber()
-//    std::cout << isNumber("hejka") << " should return false" << std::endl;
-//    std::cout << isNumber("123") << " should return true" << std::endl;
-
-//    // Test withdrawCash()
-//    withdrawCash();
-
-//    // Test
-//    depositMoney();
+	if (login(db_account_pin)) {
+		int isNotFinished = true;
+		do {
+			switch (getUserOption()) {
+				case 1: showBalance(); break;
+				case 2: withdrawCash(); break;
+				case 3: depositMoney(); break;
+				case 4: isNotFinished = false; break;
+			}
+		} while (isNotFinished);
+	}
 
     delete db_account_pin;
     return 0;
