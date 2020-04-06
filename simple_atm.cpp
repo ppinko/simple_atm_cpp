@@ -118,8 +118,13 @@ void withdrawCash() {
 		std::cout << "5 - other" << std::endl;
 		std::cout << "6 - cancel transaction" << std::endl;
 		std::cout << "choose a withdrawal option (1-6)" << std::endl;
-
-		std::cin >> selectedOption;
+        std::string checkInput;
+        std::cin >> checkInput;
+        if (!isNumber(checkInput)){
+            std::cout << "Invalid option! Try again." << std::endl;
+            continue;
+        }
+		int selectedOption = std::stoi(checkInput);
 		switch (selectedOption) {
 			case 1: valueToWithdraw = 20; break;
 			case 2: valueToWithdraw = 50; break;
@@ -160,17 +165,16 @@ int main(){
 //    std::cout << isValidAccount(12345, db_account_pin) << " should be true" << std::endl;
 //    std::cout << isValidAccount(1234, db_account_pin) << " should be false" << std::endl;
 
-    // Test login()
+//    // Test login()
 //    login(db_account_pin);
 
-    // Test isNumber()
-    std::cout << isNumber("hejka") << " should return false" << std::endl;
-    std::cout << isNumber("123") << " should return true" << std::endl;
+//    // Test isNumber()
+//    std::cout << isNumber("hejka") << " should return false" << std::endl;
+//    std::cout << isNumber("123") << " should return true" << std::endl;
 
     // Test withdrawCash()
-//    withdrawCash();
+    withdrawCash();
 
-    // showBalance();
     delete db_account_pin;
     return 0;
 }
