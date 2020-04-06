@@ -14,6 +14,8 @@ bool isGoodPin(int pin, int account_no, std::map<int, int> *db);
 bool isValidAccount(int account_no, std::map<int, int> *db);
 int getUserOption();
 bool login (std::map<int, int> *db);
+void withdrawCash();
+bool isNumber(std::string selection);
 
 void showBalance() {
     std::cout << "You have: $" << balance << std::endl;
@@ -93,7 +95,59 @@ bool login (std::map<int, int> *db) {
 	return true;
 }
 
+bool isNumber(std::string selection){
+    std::istringstream iss {selection};
+    int test {};
+    if (iss >> test) return true;
+    return false;
+}
+
+void withdrawCash() {
+
+	int selectedOption = -1;
+	int valueToWithdraw = 0;
+	bool isNotFinished = true;
+	int otherValue {};
+
+	do {
+		std::cout << "Withdrawal options:" << std::endl;
+		std::cout << "1 - $20" << std::endl;
+		std::cout << "2 - $50" << std::endl;
+		std::cout << "3 - $100" << std::endl;
+		std::cout << "4 - $200" << std::endl;
+		std::cout << "5 - other" << std::endl;
+		std::cout << "6 - cancel transaction" << std::endl;
+		std::cout << "choose a withdrawal option (1-6)" << std::endl;
+
+		std::cin >> selectedOption;
+		switch (selectedOption) {
+			case 1: valueToWithdraw = 20; break;
+			case 2: valueToWithdraw = 50; break;
+			case 3: valueToWithdraw = 100; break;
+			case 4: valueToWithdraw = 200; break;
+			case 5: valueToWithdraw = 200; break;
+			case 6: isNotFinished = false; break;
+			default:
+                std::cout << "Invalid option! Try again." << std::endl;
+				break;
+		}
+
+		if (valueToWithdraw != 0) {
+			if (valueToWithdraw > balance) {
+				std::cout << "You just have $" << balance << ". You can't withdraw $"
+				<< valueToWithdraw << std::endl;
+			} else {
+				balance = balance - valueToWithdraw;
+				isNotFinished = false;
+			}
+			valueToWithdraw = 0;
+		}
+	} while (isNotFinished);
+}
+
 int main(){
+    std::cout << std::boolalpha;
+
     // creating a database including initial account numbers and PIN
 
     std::map<int, int> *db_account_pin = new std::map<int, int>;
@@ -101,14 +155,20 @@ int main(){
         db_account_pin->emplace(i, i);
     }
 
-//    // Test isValidAccount
-//    std::cout << std::boolalpha;
+//    // Test isValidAccount()
+
 //    std::cout << isValidAccount(12345, db_account_pin) << " should be true" << std::endl;
 //    std::cout << isValidAccount(1234, db_account_pin) << " should be false" << std::endl;
 
-
     // Test login()
-    login(db_account_pin);
+//    login(db_account_pin);
+
+    // Test isNumber()
+    std::cout << isNumber("hejka") << " should return false" << std::endl;
+    std::cout << isNumber("123") << " should return true" << std::endl;
+
+    // Test withdrawCash()
+//    withdrawCash();
 
     // showBalance();
     delete db_account_pin;
