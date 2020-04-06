@@ -1,0 +1,5 @@
+Improvement possibilities:
+- adding possibility of changing PIN
+- blocking debit/credit card after providing 3 times wrong password
+- adding possibility to cancel operations while providing account number and PIN
+- providing possibility to view history of operations
